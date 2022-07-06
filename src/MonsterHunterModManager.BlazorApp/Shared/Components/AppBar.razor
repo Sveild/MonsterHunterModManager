@@ -1,0 +1,10 @@
+﻿@using MonsterHunterModManager.BlazorApp.Data
+
+<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" OnClick="DrawerToggle" Edge="Edge.Start" />
+<MudSpacer />
+@if (_currentGame != Games.None)
+{
+    <MudImage Src="@GetImagePath()" Style="height: 90%;"/>
+}
+<MudSpacer />
+<MudSwitch @bind-Checked="@IsDarkMode" ThumbIcon="@GetThemeSwitchIcon()" ThumbIconColor="Color.Primary" />

@@ -1,0 +1,37 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm
+            @ref="_form"
+            @bind-IsValid="@_isValid"
+        >
+            <MudTextField
+                @bind-Value="Settings.GameDirectory"
+                Label="Game directory"
+                Variant="Variant.Filled"
+                InputType="@InputType.Text"
+                Adornment="Adornment.End"
+                AdornmentIcon="@Icons.Material.Filled.Folder"
+                OnAdornmentClick="PickGameFolder"
+                AdornmentAriaLabel="Select game folder"
+                Validation="_folderValidator.Validation"
+                Immediate="true"
+            />
+            <MudTextField
+                @bind-Value="Settings.ModsDirectory"
+                Label="Mods directory"
+                Variant="Variant.Filled"
+                InputType="@InputType.Text"
+                Adornment="Adornment.End"
+                AdornmentIcon="@Icons.Material.Filled.Folder"
+                OnAdornmentClick="PickModsFolder"
+                AdornmentAriaLabel="Select mods folder"
+                Validation="_folderValidator.Validation"
+                Immediate="true"
+            />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Disabled="@(!_isValid)" OnClick="Save">Save</MudButton>
+    </DialogActions>
+</MudDialog>
