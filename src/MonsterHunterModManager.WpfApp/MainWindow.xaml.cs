@@ -22,9 +22,9 @@ namespace MonsterHunterModManager.WpfApp
             serviceCollection.AddBlazorWebViewDeveloperTools();
 #endif
             
-            serviceCollection.AddTransient<IFolderPickerService, FolderPickerService>();
             serviceCollection.AddMudServices();
             serviceCollection.AddSingleton<ISettingsService, SettingsService>();
+            serviceCollection.AddTransient<IFolderPickerService, FolderPickerService>();
             serviceCollection.AddSingleton<IPhysicalFileService, PhysicalFileService>();
             
             Resources.Add("services", serviceCollection.BuildServiceProvider());
