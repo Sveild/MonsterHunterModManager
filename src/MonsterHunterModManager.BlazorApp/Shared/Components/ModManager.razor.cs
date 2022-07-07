@@ -4,6 +4,7 @@ using MonsterHunterModManager.BlazorApp.Data;
 using MonsterHunterModManager.BlazorApp.Services;
 using MonsterHunterModManager.BlazorApp.Shared.Dialog;
 using MudBlazor;
+using Newtonsoft.Json;
 
 namespace MonsterHunterModManager.BlazorApp.Shared.Components
 {
@@ -23,12 +24,16 @@ namespace MonsterHunterModManager.BlazorApp.Shared.Components
         protected override async Task OnInitializedAsync()
         {
             _settings = SettingsService.GetGameSettings(Game);
-
-            if (string.IsNullOrEmpty(_settings.GameDirectory))
-                await OpenSettingsDialog();
             await base.OnInitializedAsync();
-            
             _initialized = true;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            
+            if (string.IsNullOrEmpty(_settings.GameDirectory))
+                await OpenSettingsDialog(false);
         }
 
         private async Task UploadFiles(InputFileChangeEventArgs e)
@@ -75,11 +80,12 @@ namespace MonsterHunterModManager.BlazorApp.Shared.Components
             _settings = SettingsService.GetGameSettings(Game);
         }
 
-        private async Task OpenSettingsDialog()
+        private async Task OpenSettingsDialog(bool allowCloseModal = true)
         {
             var parameters = new DialogParameters();
             
             parameters.Add(nameof(GameSettingsDialog.Settings), _settings);
+            parameters.Add(nameof(GameSettingsDialog.AllowCloseModal), allowCloseModal);
             
             var dialog = DialogService.Show<GameSettingsDialog>("Settings", parameters);
             var result = await dialog.Result;

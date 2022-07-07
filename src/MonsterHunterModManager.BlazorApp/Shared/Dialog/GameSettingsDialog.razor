@@ -31,7 +31,7 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="Cancel" Disabled="@(!AllowCloseModal)">Cancel</MudButton>
         <MudButton Color="Color.Primary" Disabled="@(!_isValid)" OnClick="Save">Save</MudButton>
     </DialogActions>
 </MudDialog>

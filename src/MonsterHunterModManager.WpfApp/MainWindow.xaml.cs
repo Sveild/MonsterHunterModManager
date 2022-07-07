@@ -29,6 +29,11 @@ namespace MonsterHunterModManager.WpfApp
             
             Resources.Add("services", serviceCollection.BuildServiceProvider());
         }
+
+        private void OnMinimizeClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
     }
     
     // Workaround for compiler error "error MC3050: Cannot find the type 'local:Main'"

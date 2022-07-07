@@ -16,7 +16,7 @@ else
             <MudButton StartIcon="@Icons.Material.Filled.Clear" OnClick="@(() => ToggleMods(false))">Disable</MudButton>
         </MudButtonGroup>
         <MudSpacer/>
-        <MudIconButton Icon="@Icons.Material.Filled.Settings" OnClick="OpenSettingsDialog" />
+        <MudIconButton Icon="@Icons.Material.Filled.Settings" OnClick="@(() => OpenSettingsDialog())" />
     </MudToolBar>
 
     @if (_initialized)

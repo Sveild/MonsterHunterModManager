@@ -12,7 +12,8 @@ public partial class GameSettingsDialog
     [Inject] private IFolderPickerService FolderPickerService { get; set; }
     
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-    
+ 
+    [Parameter] public bool AllowCloseModal { get; set; }
     [Parameter] public GameSettings Settings { get; set; }
 
     private readonly FluentValueValidator<string> _folderValidator = new(x => x.NotEmpty().FolderExists());
