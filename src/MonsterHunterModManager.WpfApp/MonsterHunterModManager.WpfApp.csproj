@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <RootNameSpace>MonsterHunterModManager.WpfApp</RootNameSpace>
+        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     </PropertyGroup>
 
     <ItemGroup>
