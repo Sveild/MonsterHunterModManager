@@ -6,7 +6,7 @@ on:
       - "monster-hunter-mod-manager/v*"
 
 env:
-  PROJECT_PATH: MonsterHunterModManager.WpfApp/MonsterHunterModManager.WpfApp.csproj
+  PROJECT_PATH: src/MonsterHunterModManager.WpfApp/MonsterHunterModManager.WpfApp.csproj
 
 jobs:
   deploy:
