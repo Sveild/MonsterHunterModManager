@@ -32,8 +32,14 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
 
+      - uses: vimtor/action-zip@v1
+        with:
+          files: src/MonsterHunterModManager.WpfApp/bin/Release/net6.0-windows/win-x64/publish/
+          recursive: true
+          dest: "Monster Hunter Mod Manager.zip"
+
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: src/MonsterHunterModManager.WpfApp/bin/Release/net6.0-windows/win-x64/publish/**/*
+          pattern: "Monster Hunter Mod Manager.zip"
           release-url: ${{ steps.create_release.outputs.upload_url }}
