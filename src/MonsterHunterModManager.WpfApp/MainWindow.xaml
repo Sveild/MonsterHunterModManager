@@ -6,48 +6,106 @@
         xmlns:blazor="clr-namespace:Microsoft.AspNetCore.Components.WebView.Wpf;assembly=Microsoft.AspNetCore.Components.WebView.Wpf"
         xmlns:shared="clr-namespace:MonsterHunterModManager.BlazorApp;assembly=MonsterHunterModManager.BlazorApp"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1280" Height="720" MinWidth="1280" MinHeight="720" MaxWidth="1280" MaxHeight="720"
+        Title="Monster Hunter Mod Manager" Width="1280" Height="720" MinWidth="1280" MinHeight="720"
 >
-    <!-- WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" -->
-    <!-- <WindowChrome.WindowChrome> -->
-    <!--     <WindowChrome CaptionHeight="22" -->
-    <!--                   ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" /> -->
-    <!-- </WindowChrome.WindowChrome> -->
-    <Grid>
-        <!-- <Grid.RowDefinitions> -->
-        <!--     <RowDefinition Height="24" /> -->
-        <!--     <RowDefinition Height="*" /> -->
-        <!-- </Grid.RowDefinitions> -->
-        <!-- <Grid Grid.Row="0" Background="#101013"> -->
-        <!--     <Grid.ColumnDefinitions> -->
-        <!--         <ColumnDefinition Width="*" /> -->
-        <!--         <ColumnDefinition Width="24" /> -->
-        <!--         <ColumnDefinition Width="24" /> -->
-        <!--     </Grid.ColumnDefinitions> -->
-        <!--     <TextBlock -->
-        <!--         Grid.Column="0" -->
-        <!--         Foreground="#fffffff2" -->
-        <!--         Margin="8 0 0 0" -->
-        <!--         VerticalAlignment="Center" -->
-        <!--         Text="Monster Hunter Mod Manager" /> -->
-        <!--     <Button -->
-        <!--         Grid.Column="1" -->
-        <!--         Click="OnMinimizeClick" -->
-        <!--         RenderOptions.EdgeMode="Aliased" -->
-        <!--     > -->
-        <!--         <Path -->
-        <!--             Width="46" -->
-        <!--             Height="32" -->
-        <!--             Data="M 18,15 H 28" -->
-        <!--             Stroke="{Binding Path=Foreground,RelativeSource={RelativeSource AncestorType={x:Type Button}}}" -->
-        <!--             StrokeThickness="1"  -->
-        <!--         /> -->
-        <!--     </Button> -->
-        <!-- </Grid> -->
-        <blazor:BlazorWebView HostPage="wwwroot\index.html" Services="{DynamicResource services}" Grid.Row="1">
-            <blazor:BlazorWebView.RootComponents>
-                <blazor:RootComponent Selector="#app" ComponentType="{x:Type shared:App}" />
-            </blazor:BlazorWebView.RootComponents>
-        </blazor:BlazorWebView>
-    </Grid>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="24"
+                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            
+            <!--Base style for title bar buttons-->
+            <Style x:Key="CaptionButtonStyle" TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="LayoutRoot" Background="Transparent" Width="34" Height="24">
+                                <TextBlock x:Name="txt" Text="{TemplateBinding Content}" FontFamily="Segoe MDL2 Assets" FontSize="10" 
+                                   Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   RenderOptions.ClearTypeHint="Auto" TextOptions.TextRenderingMode="Aliased"  TextOptions.TextFormattingMode="Display"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="LayoutRoot" Property="Background" Value="#E5E5E5"/>
+                                    <Setter TargetName="txt" Property="Foreground" Value="#000000"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--Minimize-->
+            <Style x:Key="MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+                <Setter Property="Content" Value="&#xE949;"/>
+            </Style>
+
+            <!--Maximize-->
+            <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+                <Setter Property="Content" Value="&#xE739;"/>
+            </Style>
+
+            <!--Restore-->
+            <Style x:Key="RestoreButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+                <Setter Property="Content" Value="&#xE923;"/>
+            </Style>
+
+            <!--Close-->
+            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+                <Setter Property="Content" Value="&#xE106;"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <!--Title bar button commands-->
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
+        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Maximize" />
+        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Minimize" />
+        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
+    </Window.CommandBindings>
+    
+    <Border x:Name="MainWindowBorder" BorderBrush="LightCoral" BorderThickness="0" >
+        <Grid x:Name="parentContainer" Background="LightBlue">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="*"/> 
+            </Grid.RowDefinitions>
+
+            <!--Window chrome-->
+            <Grid Grid.Row="0" Height="24" Background="#F999">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <!--App icon-->
+                    <!-- <Image Source="/Resources/watermelon.ico" Width="18" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" /> -->
+                    <TextBlock Text="Monster Hunter Mod Manager" FontFamily="Arial" Margin="4 3 0 0" />
+                </StackPanel>
+
+                <!--Caption buttons-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Style="{StaticResource MinimizeButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Minimize"
+                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
+                    <Button x:Name="RestoreButton" Visibility="Collapsed" Style="{StaticResource RestoreButtonStyle}" 
+                            Command="{x:Static SystemCommands.RestoreWindowCommand}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Restore"/>
+                    <Button x:Name="MaximizeButton" Visibility="Visible" Style="{StaticResource MaximizeButtonStyle}" 
+                            Command="{x:Static SystemCommands.MaximizeWindowCommand}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Maximize" />
+                    <Button Style="{StaticResource CloseButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Close"
+                            Command="{x:Static SystemCommands.CloseWindowCommand}"/>
+                </StackPanel>
+            </Grid>
+            
+            <!--App content-->
+            <Grid Grid.Row="1" x:Name="AppArea">
+                <blazor:BlazorWebView HostPage="wwwroot\index.html" Services="{DynamicResource services}">
+                    <blazor:BlazorWebView.RootComponents>
+                        <blazor:RootComponent Selector="#app" ComponentType="{x:Type shared:App}" />
+                    </blazor:BlazorWebView.RootComponents>
+                </blazor:BlazorWebView>
+            </Grid>
+
+        </Grid>
+    </Border>
 </Window>

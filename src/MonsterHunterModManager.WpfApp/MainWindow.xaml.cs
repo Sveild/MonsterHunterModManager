@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using MonsterHunterModManager.BlazorApp.Services;
 using MonsterHunterModManager.WpfApp.Services;
@@ -14,7 +16,8 @@ namespace MonsterHunterModManager.WpfApp
         public MainWindow()
         {
             InitializeComponent();
-            
+            StateChanged += MainWindowStateChangeRaised;
+
             var serviceCollection = new ServiceCollection();
             
             serviceCollection.AddWpfBlazorWebView();
@@ -30,9 +33,51 @@ namespace MonsterHunterModManager.WpfApp
             Resources.Add("services", serviceCollection.BuildServiceProvider());
         }
 
-        private void OnMinimizeClick(object sender, RoutedEventArgs e)
+        // Can execute
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            e.CanExecute = true;
+        }
+
+        // Minimize
+        private void CommandBinding_Executed_Minimize(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        // Maximize
+        private void CommandBinding_Executed_Maximize(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.MaximizeWindow(this);
+        }
+
+        // Restore
+        private void CommandBinding_Executed_Restore(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.RestoreWindow(this);
+        }
+
+        // Close
+        private void CommandBinding_Executed_Close(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.CloseWindow(this);
+        }
+
+        // State change
+        private void MainWindowStateChangeRaised(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                MainWindowBorder.BorderThickness = new Thickness(8);
+                RestoreButton.Visibility = Visibility.Visible;
+                MaximizeButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MainWindowBorder.BorderThickness = new Thickness(0);
+                RestoreButton.Visibility = Visibility.Collapsed;
+                MaximizeButton.Visibility = Visibility.Visible;
+            }
         }
     }
     
