@@ -2,9 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{18502BA7-57D4-4371-8431-751267207AB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterHunterModManager.WpfApp", "src\MonsterHunterModManager.WpfApp\MonsterHunterModManager.WpfApp.csproj", "{35B46C37-588E-44DA-80D8-BF5C9763EE89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterHunterModManager", "src\MonsterHunterModManager\MonsterHunterModManager.csproj", "{35B46C37-588E-44DA-80D8-BF5C9763EE89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterHunterModManager.BlazorApp", "src\MonsterHunterModManager.BlazorApp\MonsterHunterModManager.BlazorApp.csproj", "{14C8A7B5-3AC3-42B4-AD26-4000D6F9B715}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterHunterModManager.Application", "src\MonsterHunterModManager.Application\MonsterHunterModManager.Application.csproj", "{5D097F09-2BF6-408F-9639-866110E9F0F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterHunterModManager.Domain", "src\MonsterHunterModManager.Domain\MonsterHunterModManager.Domain.csproj", "{22EBE09F-1732-4710-850A-5AB6F5E86FE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterHunterModManager.Infrastructure", "src\MonsterHunterModManager.Infrastructure\MonsterHunterModManager.Infrastructure.csproj", "{66F8D8D1-FF6F-4414-A030-A872274800C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +20,23 @@ Global
 		{35B46C37-588E-44DA-80D8-BF5C9763EE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35B46C37-588E-44DA-80D8-BF5C9763EE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35B46C37-588E-44DA-80D8-BF5C9763EE89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14C8A7B5-3AC3-42B4-AD26-4000D6F9B715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14C8A7B5-3AC3-42B4-AD26-4000D6F9B715}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14C8A7B5-3AC3-42B4-AD26-4000D6F9B715}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14C8A7B5-3AC3-42B4-AD26-4000D6F9B715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D097F09-2BF6-408F-9639-866110E9F0F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D097F09-2BF6-408F-9639-866110E9F0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D097F09-2BF6-408F-9639-866110E9F0F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D097F09-2BF6-408F-9639-866110E9F0F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22EBE09F-1732-4710-850A-5AB6F5E86FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22EBE09F-1732-4710-850A-5AB6F5E86FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22EBE09F-1732-4710-850A-5AB6F5E86FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22EBE09F-1732-4710-850A-5AB6F5E86FE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F8D8D1-FF6F-4414-A030-A872274800C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F8D8D1-FF6F-4414-A030-A872274800C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F8D8D1-FF6F-4414-A030-A872274800C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F8D8D1-FF6F-4414-A030-A872274800C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{35B46C37-588E-44DA-80D8-BF5C9763EE89} = {18502BA7-57D4-4371-8431-751267207AB0}
-		{14C8A7B5-3AC3-42B4-AD26-4000D6F9B715} = {18502BA7-57D4-4371-8431-751267207AB0}
+		{5D097F09-2BF6-408F-9639-866110E9F0F2} = {18502BA7-57D4-4371-8431-751267207AB0}
+		{22EBE09F-1732-4710-850A-5AB6F5E86FE7} = {18502BA7-57D4-4371-8431-751267207AB0}
+		{66F8D8D1-FF6F-4414-A030-A872274800C1} = {18502BA7-57D4-4371-8431-751267207AB0}
 	EndGlobalSection
 EndGlobal

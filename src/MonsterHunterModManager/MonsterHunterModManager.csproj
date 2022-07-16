@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <RootNameSpace>MonsterHunterModManager</RootNameSpace>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <AssemblyName>MonsterHunterModManager</AssemblyName>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="6.0.400" />
+
+        <PackageReference Include="MudBlazor" Version="6.0.11" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="FluentValidation" Version="11.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Update="wwwroot\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Properties\PublishProfiles" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MonsterHunterModManager.Application\MonsterHunterModManager.Application.csproj" />
+      <ProjectReference Include="..\MonsterHunterModManager.Domain\MonsterHunterModManager.Domain.csproj" />
+      <ProjectReference Include="..\MonsterHunterModManager.Infrastructure\MonsterHunterModManager.Infrastructure.csproj" />
+    </ItemGroup>
+    
+</Project>
