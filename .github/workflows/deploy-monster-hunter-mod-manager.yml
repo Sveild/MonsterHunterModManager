@@ -6,7 +6,7 @@ on:
       - "monster-hunter-mod-manager/v*"
 
 env:
-  PROJECT_PATH: src/MonsterHunterModManager.WpfApp/MonsterHunterModManager.WpfApp.csproj
+  PROJECT_PATH: src/MonsterHunterModManager/MonsterHunterModManager.csproj
 
 jobs:
   deploy:
@@ -34,7 +34,7 @@ jobs:
 
       - uses: vimtor/action-zip@v1
         with:
-          files: src/MonsterHunterModManager.WpfApp/bin/Release/net6.0-windows/win-x64/publish/
+          files: src/MonsterHunterModManager/bin/Release/net6.0-windows/win-x64/publish/
           recursive: true
           dest: "Monster Hunter Mod Manager.zip"
 
