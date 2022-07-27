@@ -12,9 +12,9 @@ public class SaveGameSettingsCommandHandler : IRequestHandler<SaveGameSettingsCo
         _applicationPersistenceContext = applicationPersistenceContext;
     }
     
-    public Task<Domain.Entities.GameSettings> Handle(SaveGameSettingsCommand request, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.GameSettings> Handle(SaveGameSettingsCommand request, CancellationToken cancellationToken)
     {
-        _applicationPersistenceContext.Save(request.Settings);
-        return Task.FromResult(request.Settings);
+        await _applicationPersistenceContext.Save(request.Settings);
+        return request.Settings;
     }
 }

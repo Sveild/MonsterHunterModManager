@@ -39,21 +39,48 @@ else
             </HeaderContent>
             <RowTemplate>
                 <MudTd><MudIcon Icon="@(context.Enabled ? Icons.Material.Filled.Check : "")" Size="Size.Large" Color="Color.Success" /></MudTd>
-                <MudTd>@context.FileName</MudTd>
+                <MudTd>@context.ZipFileName</MudTd>
                 <MudTd>@PhysicalFileService.GetFileSize(_settings, context)</MudTd>
                 <MudTd>@PhysicalFileService.GetFileNumber(_settings, context)</MudTd>
                 <MudTd>
                     <MudIconButton
                         Icon="@(context.ShowDetails ? Icons.Material.Filled.ExpandLess : Icons.Filled.ExpandMore)"
-                        OnClick="@(() => context.ShowDetails = !context.ShowDetails)"/>
+                        OnClick="@(() => context.ShowDetails = !context.ShowDetails)"
+                    />
                 </MudTd>
             </RowTemplate>
             <ChildRowContent>
                 @if (context.ShowDetails)
                 {
-                    foreach (var file in PhysicalFileService.GetFileNames(_settings, context))
+                    <MudTr>
+                        <MudTd colspan="6">
+                            <MudToolBar Dense="true">
+                                <MudElement HtmlTag="span">ID: @context.Id (Only for internal purposes)</MudElement>
+                                <MudSpacer/>
+                                @* <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled"> *@
+                                @*     <MudIconButton Icon="@Icons.Filled.ArrowUpward"/> *@
+                                @*     <MudIconButton Icon="@Icons.Filled.ArrowDownward"/> *@
+                                @* </MudButtonGroup> *@
+                                <MudButton
+                                    Class="ml-4"
+                                    Variant="Variant.Filled" Color="Color.Primary"
+                                    StartIcon="@Icons.Filled.SystemUpdateAlt"
+                                    OnClick="@(() => UpdateMod(context))">
+                                    Update
+                                </MudButton>
+                            </MudToolBar>
+                        </MudTd>
+                    </MudTr>
+                    foreach (var modFileSettings in context.ModFilesSettings)
                     {
-                        <MudTr><MudTd colspan="5">@file</MudTd></MudTr>
+                        if (string.IsNullOrEmpty(modFileSettings.EnabledFileName))
+                        {
+                            <MudTr><MudTd colspan="6">@modFileSettings.OriginalName</MudTd></MudTr>
+                        }
+                        else
+                        {
+                            <MudTr><MudTd colspan="6">@modFileSettings.OriginalName => @modFileSettings.EnabledFileName</MudTd></MudTr>
+                        }
                     }
                 }
             </ChildRowContent>

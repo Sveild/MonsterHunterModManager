@@ -11,13 +11,13 @@ public class PhysicalFileService : IPhysicalFileService
         
     public List<string> GetFileNames(GameSettings settings, ModSettings modSettings)
     {
-        using var archive = ZipFile.OpenRead($"{settings.ModsDirectory}\\{modSettings.FileName}");
-        return archive.Entries.Select(e => e.Name).ToList();
+        using var archive = ZipFile.OpenRead($"{settings.ModsDirectory}\\{modSettings.ZipFileName}");
+        return archive.Entries.Select(e => e.FullName).ToList();
     }
         
     public string GetFileSize(GameSettings settings, ModSettings modSettings)
     {
-        return new FileInfo($"{settings.ModsDirectory}\\{modSettings.FileName}").Length.GetBytesReadable();
+        return new FileInfo($"{settings.ModsDirectory}\\{modSettings.ZipFileName}").Length.GetBytesReadable();
     }
 
     public int GetFileNumber(GameSettings settings, ModSettings modSettings)
@@ -38,7 +38,7 @@ public class PhysicalFileService : IPhysicalFileService
 
     public void DeleteModFile(GameSettings settings, ModSettings modSettings)
     {
-        var file = $"{settings.ModsDirectory}\\{modSettings.FileName}";
+        var file = $"{settings.ModsDirectory}\\{modSettings.ZipFileName}";
         
         if (File.Exists(file))
             File.Delete(file);
@@ -47,30 +47,48 @@ public class PhysicalFileService : IPhysicalFileService
     public bool IsModeEnabled(GameSettings settings, ModSettings modSettings)
     {
         var count = 0;
-        var files = GetFileNames(settings, modSettings);
+        var enabledCount = modSettings.ModFilesSettings.Count(mfs => mfs.EnabledFile);
 
-        foreach (var file in files)
+        foreach (var modFileSettings in modSettings.ModFilesSettings)
+        {
+            var file = string.IsNullOrEmpty(modFileSettings.EnabledFileName)
+                ? modFileSettings.OriginalName
+                : modFileSettings.EnabledFileName;
+            
             if (File.Exists($"{settings.GameDirectory}\\{file}"))
                 count += 1;
-
-        return count == files.Count;
+        }
+        
+        return count == enabledCount;
     }
 
     public void EnableMod(GameSettings settings, ModSettings modSettings)
     {
-        // var fileNames = GetFileNames(settings, mod);
-        
-        using var archive = ZipFile.OpenRead($"{settings.ModsDirectory}\\{modSettings.FileName}");
-        archive.ExtractToDirectory(settings.GameDirectory);
+        using var archive = ZipFile.OpenRead($"{settings.ModsDirectory}\\{modSettings.ZipFileName}");
+
+        foreach (var entry in archive.Entries)
+        {
+            var modFileSettings = modSettings.ModFilesSettings.Single(mfs => mfs.OriginalName == entry.FullName);
+
+            if (!modFileSettings.EnabledFile)
+                continue;
+            
+            var extractedFileName = string.IsNullOrEmpty(modFileSettings.EnabledFileName)
+                ? modFileSettings.OriginalName
+                : modFileSettings.EnabledFileName;
+            
+            entry.ExtractToFile($"{settings.GameDirectory}\\{extractedFileName}");
+        }
     }
 
     public void DisableMod(GameSettings settings, ModSettings modSettings)
     {
-        var files = GetFileNames(settings, modSettings);
-
-        foreach (var file in files)
+        foreach (var modFileSettings in modSettings.ModFilesSettings)
         {
-            var fileName = $"{settings.GameDirectory}\\{file}";
+            var extractedFileName = string.IsNullOrEmpty(modFileSettings.EnabledFileName)
+                ? modFileSettings.OriginalName
+                : modFileSettings.EnabledFileName;
+            var fileName = $"{settings.GameDirectory}\\{extractedFileName}";
             
             if (File.Exists(fileName))
                 File.Delete(fileName);

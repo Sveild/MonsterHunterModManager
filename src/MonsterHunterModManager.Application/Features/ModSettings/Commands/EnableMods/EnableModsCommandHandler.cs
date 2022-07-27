@@ -1,35 +1,30 @@
 ﻿using MediatR;
 using MonsterHunterModManager.Application.Common.Interfaces;
+using MonsterHunterModManager.Domain.Events.ModSettings;
 
 namespace MonsterHunterModManager.Application.Features.ModSettings.Commands.EnableMods;
 
 public class EnableModsCommandHandler : IRequestHandler<EnableModsCommand, List<Domain.Entities.ModSettings>>
 {
+    private readonly IMediator _mediator;
     private readonly IApplicationPersistenceContext _applicationPersistenceContext;
-    private readonly IPhysicalFileService _physicalFileService;
 
     public EnableModsCommandHandler(
-        IApplicationPersistenceContext applicationPersistenceContext,
-        IPhysicalFileService physicalFileService
+        IMediator mediator,
+        IApplicationPersistenceContext applicationPersistenceContext
     )
     {
+        _mediator = mediator;
         _applicationPersistenceContext = applicationPersistenceContext;
-        _physicalFileService = physicalFileService;
     }
     
-    public Task<List<Domain.Entities.ModSettings>> Handle(EnableModsCommand request, CancellationToken cancellationToken)
+    public async Task<List<Domain.Entities.ModSettings>> Handle(EnableModsCommand request, CancellationToken cancellationToken)
     {
-        var gameSettings = _applicationPersistenceContext.GetGameSettings(request.Game);
-        
         foreach (var modSettings in request.ModsSettings)
-        {
-            if (!_physicalFileService.IsModeEnabled(gameSettings,  modSettings))
-                _physicalFileService.EnableMod(gameSettings, modSettings);
-            
             modSettings.Enabled = true;
-            _applicationPersistenceContext.Save(modSettings);
-        }
-        
-        return Task.FromResult(_applicationPersistenceContext.GetModsSettings(request.Game));
+
+        await _applicationPersistenceContext.SaveMultiple(request.ModsSettings);
+        await _mediator.Publish(new ModEnabledEvent(request.Game), cancellationToken);
+        return _applicationPersistenceContext.GetModsSettings(request.Game);
     }
 }

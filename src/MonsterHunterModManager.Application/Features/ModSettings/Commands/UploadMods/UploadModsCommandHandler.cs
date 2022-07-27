@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MonsterHunterModManager.Application.Common.Interfaces;
+using MonsterHunterModManager.Domain.Entities;
 
 namespace MonsterHunterModManager.Application.Features.ModSettings.Commands.UploadMods;
 
@@ -17,24 +18,28 @@ public class UploadModsCommandHandler : IRequestHandler<UploadMods.UploadModsCom
         _physicalFileService = physicalFileService;
     }
     
-    public Task<List<Domain.Entities.ModSettings>> Handle(UploadMods.UploadModsCommand request, CancellationToken cancellationToken)
+    public async Task<List<Domain.Entities.ModSettings>> Handle(UploadMods.UploadModsCommand request, CancellationToken cancellationToken)
     {
         var gameSettings = _applicationPersistenceContext.GetGameSettings(request.Game);
         
         foreach(var file in request.Files)
         {
             _physicalFileService.UploadFile(gameSettings, file);
-                
+
             var modSettings = new Domain.Entities.ModSettings
             {
+                Id = Guid.NewGuid(),
                 Game = request.Game,
                 ShowDetails = false,
-                FileName = Path.GetFileName(file),
+                ZipFileName = Path.GetFileName(file),
             };
+
+            var files = _physicalFileService.GetFileNames(gameSettings, modSettings);
+            modSettings.ModFilesSettings = files.Select(f => new ModFileSettings { OriginalName = f }).ToList();
             
-            _applicationPersistenceContext.Save(modSettings);
+            await _applicationPersistenceContext.Save(modSettings);
         }
 
-        return Task.FromResult(_applicationPersistenceContext.GetModsSettings(request.Game));
+        return _applicationPersistenceContext.GetModsSettings(request.Game);
     }
 }

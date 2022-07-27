@@ -5,9 +5,11 @@ namespace MonsterHunterModManager.Application.Common.Interfaces;
 
 public interface IApplicationPersistenceContext
 {
-    void Save(AppSettings appSettings);
-    void Save(GameSettings gameSettings);
-    void Save(ModSettings modSettings);
+    Task Save(AppSettings appSettings);
+    Task Save(GameSettings gameSettings);
+    Task Save(ModSettings modSettings);
+
+    Task SaveMultiple(List<ModSettings> modsSettings);
 
     AppSettings GetAppSettings();
     GameSettings GetGameSettings(Games game);
