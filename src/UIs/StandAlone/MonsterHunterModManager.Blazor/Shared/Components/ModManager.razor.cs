@@ -1,27 +1,22 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Components;
-using MonsterHunterModManager.Application;
-using MonsterHunterModManager.Domain;
-using MonsterHunterModManager.Application;
 using MonsterHunterModManager.Application.Common.Interfaces;
 using MonsterHunterModManager.Application.Features.GameSettings.Commands.SaveGameSettings;
 using MonsterHunterModManager.Application.Features.GameSettings.Queries.GetGameSettings;
+using MonsterHunterModManager.Application.Features.ModSettings.Commands.ChangeModPositionCommand;
 using MonsterHunterModManager.Application.Features.ModSettings.Commands.DisableMods;
 using MonsterHunterModManager.Application.Features.ModSettings.Commands.EnableMods;
 using MonsterHunterModManager.Application.Features.ModSettings.Commands.RemoveMods;
 using MonsterHunterModManager.Application.Features.ModSettings.Commands.UpdateMod;
 using MonsterHunterModManager.Application.Features.ModSettings.Commands.UploadMods;
 using MonsterHunterModManager.Application.Features.ModSettings.Queries.GetModsSettings;
+using MonsterHunterModManager.Blazor.Services;
+using MonsterHunterModManager.Blazor.Shared.Dialog;
 using MonsterHunterModManager.Domain.Entities;
 using MonsterHunterModManager.Domain.Enums;
-using MonsterHunterModManager.Shared.Dialog;
 using MudBlazor;
 
-namespace MonsterHunterModManager.Shared.Components
+namespace MonsterHunterModManager.Blazor.Shared.Components
 {
     public partial class ModManager
     {
@@ -29,6 +24,7 @@ namespace MonsterHunterModManager.Shared.Components
         [Inject] private IPickerService PickerService { get; set; } = null!;
         [Inject] private IDialogService DialogService { get; set; } = null!;
         [Inject] private IPhysicalFileService PhysicalFileService { get; set; } = null!;
+        [Inject] private INxmLinkNotifierService NxmLinkNotifierService { get; set; } = null!;
 
         [Parameter] public Games Game { get; set; }
 
@@ -42,7 +38,20 @@ namespace MonsterHunterModManager.Shared.Components
         {
             await Refresh();
             await base.OnInitializedAsync();
+
+            NxmLinkNotifierService.NotifyNxmLinkEvent += ReceivedLink;
+            
             _initialized = true;
+        }
+
+        private Task ReceivedLink(string link)
+        {
+            var parameters = new DialogParameters();
+            var options = new DialogOptions {CloseButton = true, CloseOnEscapeKey = true};
+            
+            parameters.Add(nameof(TestDialog.Link), link);
+            DialogService.Show<TestDialog>("test", parameters, options);
+            return Task.CompletedTask;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -138,8 +147,10 @@ namespace MonsterHunterModManager.Shared.Components
             await Refresh();
         }
 
-        private void ChangePosition(ModSettings modSettings, int direction)
+        private async Task ChangePosition(ModSettings modSettings, int move)
         {
+            await Mediator.Send(new ChangeModPositionCommand {Game = modSettings.Game, Id = modSettings.Id, Move = move});
+            await Refresh();
         }
     }
 }

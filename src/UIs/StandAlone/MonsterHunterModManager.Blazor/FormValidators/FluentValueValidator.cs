@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace MonsterHunterModManager.FormValidators;
+namespace MonsterHunterModManager.Blazor.FormValidators;
 
 /// <summary>
 /// A glue class to make it easy to define validation rules for single values using FluentValidation

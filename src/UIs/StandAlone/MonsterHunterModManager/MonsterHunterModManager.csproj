@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <RootNameSpace>MonsterHunterModManager</RootNameSpace>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <AssemblyName>MonsterHunterModManager</AssemblyName>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="6.0.400" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\MonsterHunterModManager.Application\MonsterHunterModManager.Application.csproj" />
+      <ProjectReference Include="..\..\..\MonsterHunterModManager.Domain\MonsterHunterModManager.Domain.csproj" />
+      <ProjectReference Include="..\..\..\MonsterHunterModManager.Infrastructure\MonsterHunterModManager.Infrastructure.csproj" />
+      <ProjectReference Include="..\MonsterHunterModManager.Blazor\MonsterHunterModManager.Blazor.csproj" />
+    </ItemGroup>
+    
+</Project>

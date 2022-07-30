@@ -21,6 +21,7 @@ public class UploadModsCommandHandler : IRequestHandler<UploadMods.UploadModsCom
     public async Task<List<Domain.Entities.ModSettings>> Handle(UploadMods.UploadModsCommand request, CancellationToken cancellationToken)
     {
         var gameSettings = _applicationPersistenceContext.GetGameSettings(request.Game);
+        var modsSettings = _applicationPersistenceContext.GetModsSettings(request.Game);
         
         foreach(var file in request.Files)
         {
@@ -32,10 +33,12 @@ public class UploadModsCommandHandler : IRequestHandler<UploadMods.UploadModsCom
                 Game = request.Game,
                 ShowDetails = false,
                 ZipFileName = Path.GetFileName(file),
+                Position = modsSettings.Count != 0 ? modsSettings.Max(ms => ms.Position) + 1 : 1,
             };
 
             var files = _physicalFileService.GetFileNames(gameSettings, modSettings);
             modSettings.ModFilesSettings = files.Select(f => new ModFileSettings { OriginalName = f }).ToList();
+            modsSettings.Add(modSettings);
             
             await _applicationPersistenceContext.Save(modSettings);
         }

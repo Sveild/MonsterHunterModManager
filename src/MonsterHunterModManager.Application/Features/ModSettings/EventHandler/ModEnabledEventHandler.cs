@@ -4,7 +4,7 @@ using MonsterHunterModManager.Domain.Events.ModSettings;
 
 namespace MonsterHunterModManager.Application.Features.ModSettings.EventHandler;
 
-public class ModEnabledEventHandler : ModToggleBase, INotificationHandler<ModEnabledEvent>
+public class ModEnabledEventHandler : ModToggleEventHandlerBase, INotificationHandler<ModEnabledEvent>
 {
     public ModEnabledEventHandler(
         IApplicationPersistenceContext applicationPersistenceContext,

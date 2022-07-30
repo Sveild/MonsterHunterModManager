@@ -1,7 +1,6 @@
-﻿using System.IO;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace MonsterHunterModManager.FormValidators;
+namespace MonsterHunterModManager.Blazor.FormValidators;
 
 public static class ValidationExtensions
 {

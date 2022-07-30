@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using MonsterHunterModManager.Application;
 using MonsterHunterModManager.Application.Common.Interfaces;
+using MonsterHunterModManager.Blazor.Services;
 using MonsterHunterModManager.Infrastructure;
 using MonsterHunterModManager.Infrastructure.Services;
 using MudBlazor.Services;
@@ -18,6 +19,11 @@ namespace MonsterHunterModManager
         public MainWindow()
         {
             InitializeComponent();
+            InitializeUI();
+        }
+
+        private void InitializeUI()
+        {
             StateChanged += MainWindowStateChangeRaised;
 
             var serviceCollection = new ServiceCollection();
@@ -30,6 +36,7 @@ namespace MonsterHunterModManager
             serviceCollection.AddMudServices();
             serviceCollection.AddApplicationServices();
             serviceCollection.AddInfrastructureServices();
+            serviceCollection.AddSingleton<INxmLinkNotifierService>(NxmLinkNotifierService.Instance);
 
             Resources.Add("services", serviceCollection.BuildServiceProvider());
         }

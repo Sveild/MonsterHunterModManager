@@ -1,12 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
-using MonsterHunterModManager.Domain;
+using MonsterHunterModManager.Blazor.Extensions;
 using MonsterHunterModManager.Domain.Enums;
-using MonsterHunterModManager.Extensions;
 using MudBlazor;
 
-namespace MonsterHunterModManager.Shared.Components
+namespace MonsterHunterModManager.Blazor.Shared.Components
 {
     public partial class AppBar : IDisposable
     {

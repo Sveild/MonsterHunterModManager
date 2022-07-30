@@ -1,8 +1,7 @@
-﻿using MonsterHunterModManager.Domain;
-using MonsterHunterModManager.Domain.Enums;
+﻿using MonsterHunterModManager.Domain.Enums;
 using MudBlazor;
 
-namespace MonsterHunterModManager.Shared
+namespace MonsterHunterModManager.Blazor.Shared
 {
     public partial class MainLayout
     {

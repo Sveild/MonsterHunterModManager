@@ -1,4 +1,4 @@
-﻿namespace MonsterHunterModManager.Extensions;
+﻿namespace MonsterHunterModManager.Blazor.Extensions;
 
 public static class StringExtensions
 {

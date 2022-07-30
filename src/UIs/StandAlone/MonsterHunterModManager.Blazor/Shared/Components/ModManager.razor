@@ -57,10 +57,18 @@ else
                             <MudToolBar Dense="true">
                                 <MudElement HtmlTag="span">ID: @context.Id (Only for internal purposes)</MudElement>
                                 <MudSpacer/>
-                                @* <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled"> *@
-                                @*     <MudIconButton Icon="@Icons.Filled.ArrowUpward"/> *@
-                                @*     <MudIconButton Icon="@Icons.Filled.ArrowDownward"/> *@
-                                @* </MudButtonGroup> *@
+                                <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
+                                    <MudIconButton 
+                                        Icon="@Icons.Filled.ArrowUpward"
+                                        Disabled="context.Position == 1"
+                                        OnClick="@(() => ChangePosition(context, +1))"
+                                    />
+                                    <MudIconButton 
+                                        Icon="@Icons.Filled.ArrowDownward" 
+                                        Disabled="context.Position == _modsSettings.Max(ms => ms.Position)" 
+                                        OnClick="@(() => ChangePosition(context, -1))"
+                                    />
+                                </MudButtonGroup>
                                 <MudButton
                                     Class="ml-4"
                                     Variant="Variant.Filled" Color="Color.Primary"

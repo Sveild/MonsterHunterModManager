@@ -1,15 +1,11 @@
-﻿using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Components;
-using MonsterHunterModManager.Application;
-using MonsterHunterModManager.Domain;
-using MonsterHunterModManager.FormValidators;
-using MonsterHunterModManager.Application;
 using MonsterHunterModManager.Application.Common.Interfaces;
+using MonsterHunterModManager.Blazor.FormValidators;
 using MonsterHunterModManager.Domain.Entities;
 using MudBlazor;
 
-namespace MonsterHunterModManager.Shared.Dialog;
+namespace MonsterHunterModManager.Blazor.Shared.Dialog;
 
 public partial class GameSettingsDialog
 {

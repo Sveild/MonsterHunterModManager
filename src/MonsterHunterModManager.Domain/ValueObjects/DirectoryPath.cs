@@ -4,8 +4,8 @@ namespace MonsterHunterModManager.Domain.ValueObjects;
 
 public class DirectoryPath : ValueObject
 {
+    public static readonly DirectoryPath BaseApplicationDirectory = new($"{AppDomain.CurrentDomain.BaseDirectory}");
     public static readonly DirectoryPath SettingsDirectory = new($"{AppDomain.CurrentDomain.BaseDirectory}settings");
-    
     public static readonly DirectoryPath ModsDirectory = new ($"{AppDomain.CurrentDomain.BaseDirectory}mods");
     
     public string Path { get; set; } = string.Empty;

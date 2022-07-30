@@ -4,14 +4,14 @@ using MonsterHunterModManager.Domain.Enums;
 
 namespace MonsterHunterModManager.Application.Features.ModSettings.EventHandler;
 
-public abstract class ModToggleBase
+public abstract class ModToggleEventHandlerBase
 {
     private readonly IApplicationPersistenceContext _applicationPersistenceContext;
     private readonly IPhysicalFileService _physicalFileService;
     private readonly string PakFileNameFormat = @"re_chunk_000.pak.patch_{0}.pak";
     private readonly string PakPattern = @"(.*(\\|\/)){0,1}re_chunk_000.pak.patch_\d{3}.pak";
 
-    protected ModToggleBase(IApplicationPersistenceContext applicationPersistenceContext, IPhysicalFileService physicalFileService)
+    protected ModToggleEventHandlerBase(IApplicationPersistenceContext applicationPersistenceContext, IPhysicalFileService physicalFileService)
     {
         _applicationPersistenceContext = applicationPersistenceContext;
         _physicalFileService = physicalFileService;

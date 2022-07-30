@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using MonsterHunterModManager.Domain.Common;
 
-namespace MonsterHunterModManager.Infrastructure.Common;
+namespace MonsterHunterModManager.Infrastructure.Common.Extensions;
 
 public static class MediatorExtension
 {

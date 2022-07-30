@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
 
 namespace MonsterHunterModManager.Domain.Common;
 
@@ -6,7 +6,7 @@ public abstract class BaseEntity
 {
     private readonly List<BaseEvent> _domainEvents = new();
 
-    [NotMapped]
+    [JsonIgnore]
     public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void AddDomainEvent(BaseEvent domainEvent)

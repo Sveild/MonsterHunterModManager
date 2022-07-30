@@ -5,6 +5,7 @@ using MonsterHunterModManager.Domain.Entities;
 using MonsterHunterModManager.Domain.Enums;
 using MonsterHunterModManager.Domain.ValueObjects;
 using MonsterHunterModManager.Infrastructure.Common;
+using MonsterHunterModManager.Infrastructure.Common.Extensions;
 using Newtonsoft.Json;
 
 namespace MonsterHunterModManager.Infrastructure.Persistence;
@@ -30,7 +31,7 @@ public class ApplicationPersistenceContext : IApplicationPersistenceContext
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
         
-        File.WriteAllText($"{path}\\{fileName}.json", JsonConvert.SerializeObject(settings));
+        File.WriteAllText($"{path}\\{fileName}.json", JsonConvert.SerializeObject(settings, Formatting.Indented));
         
         if (dispatchEvents)
             await _mediator.DispatchDomainEvent(settings);

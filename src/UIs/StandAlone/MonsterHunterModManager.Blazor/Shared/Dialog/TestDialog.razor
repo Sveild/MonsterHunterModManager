@@ -1,0 +1,11 @@
+﻿<MudDialog>
+    <DialogContent>
+        @Link
+    </DialogContent>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter] private MudDialogInstance MudDialogInstance { get; set; } = null!;
+    [Parameter] public string Link { get; set; } = null!;
+}

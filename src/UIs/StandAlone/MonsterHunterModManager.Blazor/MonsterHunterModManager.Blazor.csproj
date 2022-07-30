@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView" Version="6.0.6" />
+        <PackageReference Include="MudBlazor" Version="6.0.11" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="FluentValidation" Version="11.1.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\MonsterHunterModManager.Application\MonsterHunterModManager.Application.csproj" />
+        <ProjectReference Include="..\..\..\MonsterHunterModManager.Domain\MonsterHunterModManager.Domain.csproj" />
+        <ProjectReference Include="..\..\..\MonsterHunterModManager.Infrastructure\MonsterHunterModManager.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="wwwroot/**/*" />
+    </ItemGroup>
+</Project>
