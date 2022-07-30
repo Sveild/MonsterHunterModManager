@@ -6,7 +6,7 @@ on:
       - "monster-hunter-mod-manager/v*"
 
 env:
-  PROJECT_PATH: src/MonsterHunterModManager/MonsterHunterModManager.csproj
+  PROJECT_PATH: src/UIs/StandAlone/MonsterHunterModManager/MonsterHunterModManager.csproj
 
 jobs:
   deploy:
